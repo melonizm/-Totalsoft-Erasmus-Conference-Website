@@ -1,0 +1,101 @@
+USE erasmus2025;
+GO
+
+-- Dictionary tabloları
+CREATE TABLE DictionaryStatus (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Code NVARCHAR(50)
+);
+
+CREATE TABLE DictionaryCategory (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Code NVARCHAR(50)
+);
+
+CREATE TABLE DictionaryConferenceType (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Code NVARCHAR(50)
+);
+
+CREATE TABLE DictionaryCity (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Code NVARCHAR(50)
+);
+
+CREATE TABLE DictionaryCounty (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Code NVARCHAR(50)
+);
+
+CREATE TABLE DictionaryCountry (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Code NVARCHAR(50)
+);
+
+-- Location tablosu
+CREATE TABLE Location (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(255),
+    Code NVARCHAR(50),
+    CountryId INT FOREIGN KEY REFERENCES DictionaryCountry(Id),
+    CountyId INT FOREIGN KEY REFERENCES DictionaryCounty(Id),
+    CityId INT FOREIGN KEY REFERENCES DictionaryCity(Id),
+    Address NVARCHAR(MAX),
+    Latitude DECIMAL(9,6),
+    Longitude DECIMAL(9,6)
+);
+
+-- Speaker
+CREATE TABLE Speaker (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100),
+    Nationality NVARCHAR(100),
+    Rating DECIMAL(3,2),
+    Image NVARCHAR(MAX)
+);
+
+-- Conference
+CREATE TABLE Conference (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ConferenceTypeId INT FOREIGN KEY REFERENCES DictionaryConferenceType(Id),
+    LocationId INT FOREIGN KEY REFERENCES Location(Id),
+    OrganizerEmail NVARCHAR(255),
+    CategoryId INT FOREIGN KEY REFERENCES DictionaryCategory(Id),
+    StartDate DATE,
+    EndDate DATE,
+    Name NVARCHAR(255)
+);
+
+-- ConferenceXSpeaker
+CREATE TABLE ConferenceXSpeaker (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ConferenceId INT FOREIGN KEY REFERENCES Conference(Id),
+    SpeakerId INT FOREIGN KEY REFERENCES Speaker(Id),
+    IsMainSpeaker BIT
+);
+
+-- ConferenceXAttendee
+CREATE TABLE ConferenceXAttendee (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    AttendeeEmail NVARCHAR(255),
+    ConferenceId INT FOREIGN KEY REFERENCES Conference(Id),
+    StatusId INT FOREIGN KEY REFERENCES DictionaryStatus(Id)
+);
+
+-- Logs
+CREATE TABLE Logs (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Message NVARCHAR(MAX),
+    Level NVARCHAR(20),
+    TimeStamp DATETIME,
+    Exception NVARCHAR(MAX),
+    LogEvent NVARCHAR(MAX),
+    CorrelationId UNIQUEIDENTIFIER
+);
+GO
