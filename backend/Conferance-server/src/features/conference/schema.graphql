@@ -1,0 +1,129 @@
+type ConferenceType {
+  id: Int!
+  name: String!
+  code: String
+}
+
+type Category {
+  id: Int!
+  name: String!
+  code: String
+}
+
+type Country {
+  id: Int!
+  name: String!
+  code: String
+}
+
+type County {
+  id: Int!
+  name: String!
+  code: String
+}
+
+type City {
+  id: Int!
+  name: String!
+  code: String
+}
+
+type Status {
+  id: Int!
+  name: String!
+}
+
+type Location {
+  id: Int!
+  name: String
+  address: String
+  city: City!
+  county: County!
+  country: Country!
+  latitude: Float
+  longitude: Float
+}
+
+type Speaker {
+  id: Int!
+  name: String
+  rating: Float
+  nationality: String
+  image: String
+  isMainSpeaker: Boolean
+}
+
+type Conference {
+  id: Int!
+  name: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  conferenceType: ConferenceType
+  category: Category
+  organizerEmail: String
+  speakers: [Speaker!]!
+  location: Location
+  status(userEmail: String!): Status
+}
+
+input ConferenceFilterInput {
+  startDate: DateTime
+  endDate: DateTime
+  name: String
+}
+
+extend type Query {
+  conferenceList(filters: ConferenceFilterInput, userEmail:String!): [Conference]
+  conference(id: Int!): Conference!
+  isConferenceTypeExists(name: String!): Boolean!
+  isCategoryExists(name: String!): Boolean!
+  isCountryExists(name: String!): Boolean!
+  isCountyExists(name: String!): Boolean!
+  isCityExists(name: String!): Boolean!
+  countryList: [Country!]!
+  countyList: [County!]!
+  cityList: [City!]!
+  conferenceTypeList: [ConferenceType!]!
+  categoryList: [Category!]!
+}
+
+input SpeakerInput {
+  id: Int!
+  name: String
+  nationality: String
+  rating: Float
+  isMainSpeaker: Boolean
+}
+
+input LocationInput {
+  id: Int
+  name: String
+  address: String
+  cityId: Int
+  countyId: Int
+  countryId: Int
+  latitude: Float
+  longitude: Float
+}
+
+input ConferenceInput {
+  id: Int
+  name: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  conferenceTypeId: Int
+  categoryId: Int
+  organizerEmail: String
+  location: LocationInput!
+  speakers: [SpeakerInput!]!
+}
+
+extend type Mutation {
+  saveConference(conference: ConferenceInput!): Conference!
+  deleteConference(id: Int!): Boolean!
+  addCountry(name: String!, code: String): Boolean!
+  addCounty(name: String!, code: String): Boolean!
+  addCity(name: String!, code: String): Boolean!
+  addConferenceType(name: String!, code: String): Boolean!
+  addCategory(name: String!, code: String): Boolean!
+}

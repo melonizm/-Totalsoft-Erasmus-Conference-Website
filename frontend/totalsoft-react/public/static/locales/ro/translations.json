@@ -1,0 +1,93 @@
+{
+  "BuildVersion": "Versiune",
+  "RowsOf": "Rânduri de",
+  "RowsPerPage": "Rânduri pe pagină",
+  "MyProfile": "Profilul meu",
+  "Forbidden": "Nu aveți dreptul să vedeți această pagină!",
+  "NavBar": {
+    "Welcome": "Bun venit",
+    "Conferences": "Conferințe"
+  },
+  "LandingPage": {
+    "BadEmail": "Acesta nu este un e-mail valid!",
+    "Title": "Bun venit",
+    "Subtitle": "Vă rugăm să vă autentificați"
+  },
+  "Tooltips": {
+    "Logout": "Ieșire",
+    "HidePassword": "Ascunde parola",
+    "ShowPassword": "Arată parola"
+  },
+  "Dialog": {
+    "Yes": "Da",
+    "No": "Nu"
+  },
+  "DateTime": {
+    "InvalidDateMessage": "Formatul datei este invalid",
+    "MinDateMessage": "Data introdusă nu poate fi mai mică decât valoarea minimă",
+    "MaxDateMessage": "Data introdusă nu poate fi mai mare decât valoarea maximă"
+  },
+  "Validations": {
+    "Cnp": "CNP-ul nu este valid",
+    "UniqueCnp": "CNP-ul nu este unic",
+    "Phone": "Numărul de telefon nu este valid",
+    "NoSpace": "Nu poate începe cu spațiu",
+    "Integer": "Valoarea trebuie să fie un număr întreg",
+    "Generic": {
+      "Mandatory": "Valoarea este obligatorie",
+      "AtLeastOne": "Trebuie să existe cel puțin un element",
+      "Regex": "Valoarea are un format invalid",
+      "BadEmail": "Acesta nu este un email valid!",
+      "OutOfRange": "Valoarea trebuie să fie între {{min}} și {{max}}",
+      "Greater": "Valoarea trebuie să fie mai mare decât {{min}}",
+      "GreaterOrEqual": "Valoarea trebuie să fie mai mare sau egală cu {{min}}",
+      "Less": "Valoarea trebuie să fie mai mică decât {{max}}",
+      "LessOrEqual": "Valoarea trebuie să fie mai mică sau egală cu {{max}}",
+      "MaxCharacters": "Lungimea trebuie să fie mai mică decât {{max}}",
+      "MinCharacters": "Lungimea trebuie să fie mai mare decât {{min}}",
+      "Unique": "Valoarea pentru {{selector}} trebuie să fie unică"
+    }
+  },
+  "General": {
+    "Buttons": {
+      "ApplyFilters": "Aplică filtre",
+      "ResetFilters": "Resetează filtre",
+      "AddConference": "Adaugă conferință",
+      "Save": "Salvează",
+      "AddSpeaker": "Adaugă orator",
+      "DeleteSpeaker": "Șterge orator"
+    }
+  },
+  "Speaker": {
+    "Name": "Nume",
+    "Nationality": "Naționalitate",
+    "Rating": "Evaluare",
+    "MainSpeaker": "Orator principal"
+  },
+  "Conference": {
+    "Name": "Nume conferință",
+    "StartDate": "Data începerii",
+    "EndDate": "Data terminării",
+    "Type": "Tipul conferinței",
+    "Category": "Categorie",
+    "Country": "Țară",
+    "County": "Județ",
+    "City": "Oraș",
+    "Latitude": "Latitudine",
+    "Longitude": "Longitudine",
+    "Address": "Adresă",
+    "Speakers": "Oratori",
+    "Info": "Informații conferință",
+    "Location": "Locație",
+    "Filters": {
+      "Edit": "Editează",
+      "Delete": "Șterge",
+      "Speaker": "Orator: ",
+      "Attend": "Participă",
+      "Join": "Înscrie-te",
+      "Withdraw": "Retrage-te",
+      "StatusNotSet": "Nu participi"
+    }
+  }
+
+}

@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model DictionaryStatus {
+  id                  Int                   @id(map: "PK__Dictiona__3214EC0793A1A5E0") @default(autoincrement()) @map("Id")
+  name                String?               @map("Name") @db.NVarChar(100)
+  code                String?               @map("Code") @db.NVarChar(50)
+  conferenceXAttendee ConferenceXAttendee[]
+}
+
+model DictionaryCategory {
+  id          Int          @id(map: "PK__Dictiona__3214EC07B6BAB7D4") @default(autoincrement()) @map("Id")
+  name        String?      @map("Name") @db.NVarChar(100)
+  code        String?      @map("Code") @db.NVarChar(50)
+  conferences Conference[]
+}
+
+model DictionaryConferenceType {
+  id          Int          @id(map: "PK__Dictiona__3214EC07B4DDDC9C") @default(autoincrement()) @map("Id")
+  name        String?      @map("Name") @db.NVarChar(100)
+  code        String?      @map("Code") @db.NVarChar(50)
+  conferences Conference[]
+}
+
+model DictionaryCity {
+  id        Int        @id(map: "PK__Dictiona__3214EC07205FF98C") @default(autoincrement()) @map("Id")
+  name      String?    @map("Name") @db.NVarChar(100)
+  code      String?    @map("Code") @db.NVarChar(50)
+  locations Location[]
+}
+
+model DictionaryCounty {
+  id        Int        @id(map: "PK__Dictiona__3214EC07A6B9674F") @default(autoincrement()) @map("Id")
+  name      String?    @map("Name") @db.NVarChar(100)
+  code      String?    @map("Code") @db.NVarChar(50)
+  locations Location[]
+}
+
+model DictionaryCountry {
+  id        Int        @id(map: "PK__Dictiona__3214EC077F1FFE29") @default(autoincrement()) @map("Id")
+  name      String?    @map("Name") @db.NVarChar(100)
+  code      String?    @map("Code") @db.NVarChar(50)
+  locations Location[]
+}
+
+model Location {
+  id          Int                @id(map: "PK__Location__3214EC07891A1A57") @default(autoincrement()) @map("Id")
+  name        String?            @map("Name") @db.NVarChar(255)
+  code        String?            @map("Code") @db.NVarChar(50)
+  countryId   Int?               @map("CountryId")
+  countyId    Int?               @map("CountyId")
+  cityId      Int?               @map("CityId")
+  address     String?            @map("Address") @db.NVarChar(Max)
+  latitude    Decimal?           @map("Latitude") @db.Decimal(9, 6)
+  longitude   Decimal?           @map("Longitude") @db.Decimal(9, 6)
+  conferences Conference[]
+  city        DictionaryCity?    @relation(fields: [cityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Location__CityId__367C1819")
+  country     DictionaryCountry? @relation(fields: [countryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Location__Countr__3493CFA7")
+  county      DictionaryCounty?  @relation(fields: [countyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Location__County__3587F3E0")
+}
+
+model Speaker {
+  id                 Int                  @id(map: "PK__Speaker__3214EC072425653E") @default(autoincrement()) @map("Id")
+  name               String?              @map("Name") @db.NVarChar(100)
+  nationality        String?              @map("Nationality") @db.NVarChar(100)
+  rating             Decimal?             @map("Rating") @db.Decimal(3, 2)
+  image              String?              @map("Image") @db.NVarChar(Max)
+  conferenceXSpeaker ConferenceXSpeaker[]
+}
+
+model Conference {
+  id                  Int                       @id(map: "PK__Conferen__3214EC071A91B573") @default(autoincrement()) @map("Id")
+  conferenceTypeId    Int?                      @map("ConferenceTypeId")
+  locationId          Int?                      @map("LocationId")
+  organizerEmail      String?                   @map("OrganizerEmail") @db.NVarChar(255)
+  categoryId          Int?                      @map("CategoryId")
+  startDate           DateTime?                 @map("StartDate") @db.Date
+  endDate             DateTime?                 @map("EndDate") @db.Date
+  name                String?                   @map("Name") @db.NVarChar(255)
+  category            DictionaryCategory?       @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Conferenc__Categ__3D2915A8")
+  conferenceType      DictionaryConferenceType? @relation(fields: [conferenceTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Conferenc__Confe__3B40CD36")
+  location            Location?                 @relation(fields: [locationId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Conferenc__Locat__3C34F16F")
+  conferenceXAttendee ConferenceXAttendee[]
+  conferenceXSpeaker  ConferenceXSpeaker[]
+}
+
+model ConferenceXSpeaker {
+  id            Int         @id(map: "PK__Conferen__3214EC079BAD7B1D") @default(autoincrement()) @map("Id")
+  conferenceId  Int?        @map("ConferenceId")
+  speakerId     Int?        @map("SpeakerId")
+  isMainSpeaker Boolean?    @map("IsMainSpeaker")
+  conference    Conference? @relation(fields: [conferenceId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Conferenc__Confe__40058253")
+  speaker       Speaker?    @relation(fields: [speakerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Conferenc__Speak__40F9A68C")
+}
+
+model ConferenceXAttendee {
+  id               Int               @id(map: "PK__Conferen__3214EC07FF920E69") @default(autoincrement()) @map("Id")
+  attendeeEmail    String?           @map("AttendeeEmail") @db.NVarChar(255)
+  conferenceId     Int?              @map("ConferenceId")
+  statusId         Int?              @map("StatusId")
+  conference       Conference?       @relation(fields: [conferenceId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Conferenc__Confe__43D61337")
+  dictionaryStatus DictionaryStatus? @relation(fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Conferenc__Statu__44CA3770")
+}
+
+model Logs {
+  id            Int       @id(map: "PK__Logs__3214EC07AF25347C") @default(autoincrement()) @map("Id")
+  message       String?   @map("Message") @db.NVarChar(Max)
+  level         String?   @map("Level") @db.NVarChar(20)
+  timeStamp     DateTime? @map("TimeStamp") @db.DateTime
+  exception     String?   @map("Exception") @db.NVarChar(Max)
+  logEvent      String?   @map("LogEvent") @db.NVarChar(Max)
+  correlationId String?   @map("CorrelationId") @db.UniqueIdentifier
+}

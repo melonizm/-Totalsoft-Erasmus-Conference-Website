@@ -1,0 +1,15 @@
+{
+  "@totalsoft/generator-graphql-rocket": {
+    "__TIMESTAMP__": "7/11/2025, 10:31:47 AM",
+    "__VERSION__": "3.0.3",
+    "withRights": true,
+    "withMultiTenancy": true,
+    "hasSharedDb": true,
+    "dbConnectionName": "conferenceDb",
+    "addSubscriptions": true,
+    "addMessaging": false,
+    "addHelm": false,
+    "addTracing": false,
+    "addQuickStart": true
+  }
+}
